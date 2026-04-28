@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subjective Answer Evaluation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #05002e;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column; /* Make content stack vertically */
+            align-items: center; /* Center horizontally */
+            justify-content: center; /* Center vertically */
+            height: 100vh; /* Full height of the viewport */
+        }
+
+        .centered {
+            text-align: center;
+            margin-bottom: 20px; /* Add margin below heading */
+        }
+
+        .container {
+            width: 300px;
+            padding: 20px;
+            background-color: #21316f;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(11, 0, 110, 0.2);
+            text-align: center;
+        }
+
+        .container h2 {
+            margin-bottom: 20px;
+            font-size: 24px; /* Larger font size */
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 16px; /* Larger font size */
+            width: 30%; /* Adjusted width for label */
+            text-align: right; /* Align label text to the right */
+        }
+
+        .input-group input {
+            flex: 1; /* Fill remaining space */
+            margin-left: 10px; /* Add margin to space out input and label */
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px; /* Larger font size */
+            color: #333; /* Dark text color */
+        }
+
+        .btn {
+            width: auto; /* Set width to auto */
+            padding: 15px;
+            background-color: #23a403; /* Green button */
+            border: none;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 16px; /* Larger font size */
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #17c200; /* Darker green color on hover */
+        }
+
+        /* Styling for the tick and cross symbols */
+        .symbol {
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .tick,
+        .cross {
+            font-size: 48px; /* Larger font size for symbols */
+        }
+
+        .tick {
+            color: #4caf50; /* Green color for tick */
+        }
+
+        .cross {
+            color: #f44336; /* Red color for cross */
+        }
+    </style>
+    <script>
+        function redirectToUploadPage() {
+            // Redirect to the upload page after successful login
+            window.location.href = "upload.html";
+        }
+    </script>
+
+</head>
+
+<body>
+    <h1 class="centered">Subjective Answer Evaluation</h1>
+    <div class="container">
+        <h2>User Login</h2>
+        <form action="/login" method="POST">
+            <div class="input-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit" class="btn">Login</button>
+        </form>
+    </div>
+
+</body>
+
+</html>

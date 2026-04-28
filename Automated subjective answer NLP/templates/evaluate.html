@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Evaluation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #1e2749; /* Dark blue background */
+      color: #fff; /* White font color */
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+    table {
+      width: 70%; /* Reduced size of the table */
+      border-collapse: collapse;
+      margin: 20px auto; /* Center the table */
+      background-color: #fff; /* White background color for the table */
+    }
+    th {
+      border: 1px solid #ffffff;
+      padding: 8px;
+      text-align: center;
+    }
+    td{
+      border: 1px solid #ffffff;
+      padding: 8px;
+      text-align: center;
+      color:#ffffff;
+      background-color: #1e2749;
+
+    }
+    th {
+      background-color: #4c84af; 
+      color: rgb(255, 255, 255);
+    }
+    .answered {
+      background-color: #45a049; /* Darker green color */
+    }
+    .not-answered {
+      background-color: #f44336; /* Red color */
+    }
+    .btn-container {
+      text-align: center;
+    }
+    .btn {
+      background-color: #4e8de6; /* Light blue color */
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+      margin-right: 10px;
+    }
+    .btn:hover {
+      background-color: #3666b8; /* Darker blue color on hover */
+    }
+    .btn.evaluate-btn {
+      background-color: #23a403;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+    .btn.evaluate-btn:hover {
+      background-color: #17c200; /* Darker green color on hover */
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Evaluation</h1>
+    <table>
+      <tr>
+        <th class="question-number">Question</th>
+        <th>Status</th>
+      </tr>
+      {% set sorted_answers = answers|sort_by_question_number %}
+      {% for question_num, answered in sorted_answers %}
+      <tr>
+        <td>Question {{ question_num.split('answer')[1] }}</td>
+        <td class="{% if answered %}answered{% else %}not-answered{% endif %}">
+          {% if answered %}Answered{% else %}Not Answered{% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+    <div class="btn-container">
+      
+      <form action="/ques" method="GET" style="display: inline-block;">
+        <button type="submit" class="btn">Go back to attempt</button>
+      </form>
+      
+      <form action="/results" method="get" style="display: inline-block;">
+        <input type="hidden" name="total_score" value="{{ total_score }}">
+        <input type="hidden" name="final_grade" value="{{ final_grade }}">
+        <button type="submit" class="btn" style="
+        background-color: #23a403;
+        color: #fff;
+        padding: 10px 30px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+        margin-bottom: 10px;
+        outline: none; 
+      " onmouseover="this.style.backgroundColor='#17c200'" onmouseout="this.style.backgroundColor='#23a403'">Evaluate</button>
+      </form>
+      
+    </div>
+  </div>
+</body>
+</html>

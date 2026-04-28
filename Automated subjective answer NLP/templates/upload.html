@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paper Analysis</title>
+  <style>
+    body {
+      background-color:  #05002e; /* Dark blue color */
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif; /* Use Arial font for better readability */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      text-align: center;
+      color: #fff; /* White text color */
+      margin-bottom: 50px;
+      position: relative; /* Relative positioning for absolute positioning within */
+    }
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+    .file-upload-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .file-upload-container input[type=file] {
+      display: none;
+    }
+    .file-upload-container label {
+      background-color: #23a403; /* Light sky blue color */
+      color: #fff; /* White text color */
+      padding: 15px 30px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 18px;
+      transition: background-color 0.3s ease;
+      margin-bottom: 10px;
+      outline: none; /* Remove outline on focus */
+    }
+    .file-upload-container label:hover {
+      background-color: #17c200; /* Darker sky blue color on hover */
+    }
+    #fileName {
+      font-size: 12px;
+      color: #fff;
+      margin-top: 5px;
+    }
+    #previewContainer {
+      width: 300px; /* Set width of the container */
+      max-height: 300px; /* Set max height of the container */
+      margin: 20px auto; /* Center the container */
+      overflow: hidden; /* Hide overflow */
+      position: relative; /* Relative positioning for absolute positioning within */
+    }
+    #previewImage {
+      max-width: 100%; /* Limit image width to 100% of the container */
+      max-height: 100%; /* Limit image height to 100% of the container */
+      display: block; /* Ensure the image is visible */
+      margin: auto; /* Center the image */
+    }
+    #enterAnswers {
+      background-color: #23a403; /* Light sky blue color */
+      color: #fff; /* White text color */
+      padding: 15px 30px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 18px;
+      transition: background-color 0.3s ease;
+      outline: none; /* Remove outline on focus */
+      display: block; /* Display as block element */
+      margin-top: 155px; /* Add margin from the top */
+      width: 200px; /* Set fixed width */
+    }
+
+    #enterAnswers:hover {
+      background-color: #17c200; /* Darker sky blue color on hover */
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Upload your answers here</h1>
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+      <input type="file" name="image" id="fileInput" style="background-color: #44a4ca; /* Light sky blue color */
+      color: #fff;
+      padding: 15px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 18px;" onchange="displayPreviewImage(this)">
+      <input type="submit" value="Upload" style="
+      background-color: #23a403;
+      color: #fff;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 18px;
+      transition: background-color 0.3s ease;
+      margin-bottom: 10px;
+      outline: none; 
+    " onmouseover="this.style.backgroundColor='#17c200'" onmouseout="this.style.backgroundColor='#23a403'">
+    
+    </form>
+
+    <!-- Preview Image Container -->
+    <div id="previewContainer">
+      <img id="previewImage" src="" alt="Preview Image">
+    </div>
+
+    <h1>OR</h1>    
+
+    <button id="enterAnswers" onclick="redirectToQuestionPage()">Enter Answers</button>
+    
+    <script>
+      function displayPreviewImage(input) {
+        const previewImage = document.getElementById('previewImage');
+        const previewContainer = document.getElementById('previewContainer');
+        const enterAnswersButton = document.getElementById('enterAnswers');
+
+        if (input.files && input.files[0]) {
+          const reader = new FileReader();
+
+          reader.onload = function(e) {
+            previewImage.src = e.target.result;
+            previewImage.style.display = 'block'; // Display the preview image
+
+            // Set height of preview container based on image dimensions
+            const img = new Image();
+            img.src = e.target.result;
+            img.onload = function() {
+              const aspectRatio = img.width / img.height;
+              const maxHeight = 300; // Max height of the preview container
+              let height = Math.min(img.height, maxHeight); // Limit height to maxHeight
+              let width = height * aspectRatio; // Calculate width based on aspect ratio
+
+              // Check if width exceeds the max width of the container
+              if (width > 300) {
+                width = 300;
+                height = width / aspectRatio;
+              }
+
+              // Apply dimensions to the preview container and image
+              previewContainer.style.height = `${height}px`;
+              previewContainer.style.width = `${width}px`;
+
+              const buttonTop = height + 40; // 20px padding
+              enterAnswersButton.style.position = "absolute";
+              enterAnswersButton.style.top = `${buttonTop}px`;
+              enterAnswersButton.style.left = "50%";
+              enterAnswersButton.style.transform = "translateX(-50%)";
+            };
+          };
+
+          reader.readAsDataURL(input.files[0]);
+        } else {
+          previewImage.style.display = 'none'; // Hide the preview image if no file is chosen
+          // Reset dimensions of the preview container
+          previewContainer.style.height = 'auto';
+          previewContainer.style.width = '300px';
+          // Reset position of "Enter Answers" button
+          enterAnswersButton.style.position = "absolute";
+          enterAnswersButton.style.top = "20px"; // Fixed distance from the bottom
+          enterAnswersButton.style.left = "50%";
+          enterAnswersButton.style.transform = "translateX(-50%)";
+        }
+      }
+
+      function redirectToQuestionPage() {
+        // Redirect to the question page
+        window.location.href = "/ques";
+      }
+    </script>
+  </div>
+</body>
+</html>
